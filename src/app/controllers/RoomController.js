@@ -9,7 +9,7 @@ class RoomController {
       return res.status(400).json({ error: 'Usuário não permitido!' });
     }
 
-    const rooms = await Room.all();
+    const rooms = await Room.find();
 
     return res.json(rooms);
   }
