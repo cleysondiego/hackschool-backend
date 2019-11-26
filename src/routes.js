@@ -19,6 +19,8 @@ routes.get('/users/:room_id', handle(controllers.UserController.index));
 routes.post('/room', handle(controllers.RoomController.store));
 routes.get('/room', handle(controllers.RoomController.index));
 
+routes.get('/score', handle(controllers.ScoreController.index));
+
 routes.post('/ask', handle(controllers.AskController.store));
 routes.get('/ask/room_id', handle(controllers.AskController.index));
 
