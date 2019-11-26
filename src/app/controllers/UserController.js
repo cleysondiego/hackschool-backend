@@ -14,7 +14,7 @@ class UserController {
   }
 
   async index(req, res) {
-    const users = await User.all({ where: { room: req.params.room_id } });
+    const users = await User.find({ where: { room: req.params.room_id } });
 
     return res.json(users);
   }

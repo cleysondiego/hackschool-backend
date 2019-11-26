@@ -1,7 +1,8 @@
+import authConfig from '../../config/auth';
+
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const authConfig = require('../../config/auth');
 
 const UserSchema = new mongoose.Schema(
   {
@@ -20,11 +21,12 @@ const UserSchema = new mongoose.Schema(
     score: {
       type: Number,
       required: true,
+      default: 0,
     },
     room: {
       type: mongoose.Types.ObjectId,
       ref: 'Room',
-      required: true,
+      default: null,
     },
     isSchool: {
       type: Boolean,
