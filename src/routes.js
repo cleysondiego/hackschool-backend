@@ -1,11 +1,25 @@
 import { Router } from 'express';
 
-// import authMiddleware from './app/middlewares/auth';
+import handle from 'express-async-handler';
+import authMiddleware from './app/middlewares/auth';
+
+import controllers from './app/controllers';
 
 const routes = new Router();
 
-routes.get('/users', (req, res) => {
-  res.send('Hello World');
-});
+routes.post('/users', handle(controllers.UserController.store));
+
+routes.post('/sessions', handle(controllers.SessionController.store));
+
+// A partir daqui tem que estar logado
+routes.use(authMiddleware);
+
+routes.get('/users/:room_id', handle(controllers.UserController.index));
+
+routes.post('/rooms', handle(controllers.RoomController.store));
+routes.get('/rooms', handle(controllers.RoomController.index));
+
+routes.post('/ask', handle(controllers.AskController.store));
+routes.get('/ask/room_id', handle(controllers.AskController.index));
 
 export default routes;
