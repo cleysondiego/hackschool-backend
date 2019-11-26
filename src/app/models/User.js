@@ -28,7 +28,6 @@ const UserSchema = new mongoose.Schema(
     },
     isSchool: {
       type: Boolean,
-      required: true,
       default: false,
     },
   },
