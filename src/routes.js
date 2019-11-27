@@ -20,7 +20,7 @@ routes.post('/rooms', handle(controllers.RoomController.store));
 routes.get('/rooms', handle(controllers.RoomController.index));
 
 routes.get('/score', handle(controllers.ScoreController.index));
-routes.put('/score/:scorePoint', handle(controllers.ScoreController.update));
+routes.put('/score', handle(controllers.ScoreController.update));
 
 routes.post('/comments', handle(controllers.CommentController.store));
 routes.get(

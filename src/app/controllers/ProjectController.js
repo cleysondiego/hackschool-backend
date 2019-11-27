@@ -1,6 +1,8 @@
 import User from '../models/User';
 import Project from '../models/Project';
 
+const { ObjectId } = require('mongoose').Types;
+
 class ProjectController {
   async index(req, res) {
     const user = await User.findById(req.userId);
@@ -41,7 +43,7 @@ class ProjectController {
 
     const project = await Project.findById(project_id);
 
-    project.room_id = room_id;
+    project.room = new ObjectId(room_id);
     project.save();
 
     return res.json(project);
