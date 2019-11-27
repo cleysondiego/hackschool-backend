@@ -1,6 +1,8 @@
 import Room from '../models/Room';
 import User from '../models/User';
 
+const { ObjectId } = require('mongoose').Types;
+
 class ScoreController {
   async index(req, res) {
     const user = await User.findById(req.userId);
@@ -9,23 +11,23 @@ class ScoreController {
       return res.status(400).json({ error: 'Usuário não permitido!' });
     }
 
-    const population = await User.find()
-      .where('isSchool')
-      .all(false)
-      .populate({
-        path: 'room',
-        populate: {
-          path: '_id',
-        },
-      });
+    const rooms = await Room.find();
 
-    // const scoresUsers = population.map(dado => {
-    //   return dado.score;
-    // });
+    const newRoom = [];
 
-    // const scores = scoresUsers.reduce((ant, next) => ant + next, 0);
+    for (const room of rooms) {
+      let totalScore = 0;
+      const users = await User.find()
+        .where('room')
+        .all(new ObjectId(room._id));
 
-    return res.json(population);
+      for (const user of users) {
+        totalScore += user.score;
+      }
+      newRoom.push({ ...room.toObject(), score: totalScore });
+    }
+
+    return res.json(newRoom);
   }
 }
 
