@@ -16,12 +16,21 @@ routes.use(authMiddleware);
 
 routes.get('/users/:room_id', handle(controllers.UserController.index));
 
-routes.post('/room', handle(controllers.RoomController.store));
-routes.get('/room', handle(controllers.RoomController.index));
+routes.post('/rooms', handle(controllers.RoomController.store));
+routes.get('/rooms', handle(controllers.RoomController.index));
 
 routes.get('/score', handle(controllers.ScoreController.index));
+routes.put('/score/:scorePoint', handle(controllers.ScoreController.update));
 
-routes.post('/ask', handle(controllers.AskController.store));
-routes.get('/ask/room_id', handle(controllers.AskController.index));
+routes.post('/comments', handle(controllers.CommentController.store));
+routes.get(
+  '/comments/:project_id',
+  handle(controllers.CommentController.index)
+);
+
+routes.post('/projects', handle(controllers.ProjectController.store));
+routes.get('/projects', handle(controllers.ProjectController.index));
+routes.get('/projects/:project_id', handle(controllers.ProjectController.show));
+routes.put('/projects/', handle(controllers.ProjectController.update));
 
 export default routes;

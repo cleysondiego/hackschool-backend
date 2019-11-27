@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
-const AskSchema = new mongoose.Schema(
+const CommentSchema = new mongoose.Schema(
   {
     title: {
       type: String,
       required: true,
     },
-    room: {
+    project: {
       type: mongoose.Types.ObjectId,
-      ref: 'Room',
+      ref: 'Project',
       required: true,
     },
     author: {
@@ -30,4 +30,4 @@ const AskSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model('Ask', AskSchema);
+export default mongoose.model('Comment', CommentSchema);

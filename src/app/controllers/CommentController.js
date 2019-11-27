@@ -1,10 +1,10 @@
-import Ask from '../models/Ask';
+import Comment from '../models/Comment';
 import User from '../models/User';
-import Room from '../models/Room';
+import Project from '../models/Project';
 
 const { ObjectId } = require('mongoose').Types;
 
-class AskController {
+class CommentController {
   async index(req, res) {
     const user = await User.findById(req.userId);
 
@@ -16,21 +16,21 @@ class AskController {
       return res.status(400).json({ error: 'Usuário não permitido!' });
     }
 
-    const room = await Room.findById(req.params.room_id);
+    const project = await Project.findById(req.params.project_id);
 
-    if (!room) {
-      return res.status(400).json({ error: 'Sala não encontrada!' });
+    if (!project) {
+      return res.status(400).json({ error: 'Projeto não encontrada!' });
     }
 
-    const asks = await Ask.find()
-      .where('room')
-      .all(new ObjectId(req.params.room_id));
+    const comments = await Comment.find()
+      .where('project')
+      .all(new ObjectId(req.params.project_id));
 
-    return res.json(asks);
+    return res.json(comments);
   }
 
   async store(req, res) {
-    const { title, room_id, text, tags } = req.body;
+    const { title, project_id, text, tags } = req.body;
 
     const user = await User.findById(req.userId);
 
@@ -44,22 +44,22 @@ class AskController {
         .json({ error: 'Escola não é permitida a criar perguntas!' });
     }
 
-    const room = await Room.findById(room_id);
+    const project = await Project.findById(project_id);
 
-    if (!room) {
-      return res.status(400).json({ error: 'Sala não encontrada!' });
+    if (!project) {
+      return res.status(400).json({ error: 'Projeto não encontrado!' });
     }
 
-    const ask = await Ask.create({
+    const comment = await Comment.create({
       title,
-      room: room_id,
+      project: project_id,
       author: req.userId,
       text,
       tags,
     });
 
-    return res.json(ask);
+    return res.json(comment);
   }
 }
 
-module.exports = new AskController();
+module.exports = new CommentController();

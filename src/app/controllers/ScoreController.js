@@ -29,6 +29,21 @@ class ScoreController {
 
     return res.json(newRoom);
   }
+
+  async update(req, res) {
+    const { scorePoint } = req.body;
+
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      return res.status(400).json({ error: 'Usuário não existe!' });
+    }
+
+    user.score += scorePoint;
+    user.save();
+
+    return res.json(user);
+  }
 }
 
 module.exports = new ScoreController();
