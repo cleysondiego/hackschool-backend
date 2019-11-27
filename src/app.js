@@ -18,7 +18,7 @@ class App {
   middlewares() {
     this.server.use(
       cors({
-        origin: false, // caminho do front end que poderão acessar o servidor.
+        origin: '*', // caminho do front end que poderão acessar o servidor.
       })
     );
     this.server.use(express.json());
